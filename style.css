@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background: #0F0F10;
+    color: #FFFFFF;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #141416;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.header {
+    padding: 60px 20px 40px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 40px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.listening-indicator {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 20px auto;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.listening-indicator.active {
+    background: linear-gradient(135deg, #00F5A0 0%, #00D9F5 100%);
+    animation: fadeInPulse 2s ease-in-out infinite;
+}
+
+@keyframes fadeInPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.mic-container {
+    text-align: center;
+}
+
+.mic-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    background: #1F1F22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px;
+}
+
+.mic-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.mic-icon:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.20);
+}
+
+.mic-icon.listening {
+    border-color: #00F5A0;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    z-index: 10;
+}
+
+.save-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    padding: 14px 26px;
+    background: #1F1F22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: rgba(255, 255, 255, 0.20);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0px) scale(0.98);
+}
+
+.btn:disabled {
+    background: #9CA3AF !important;
+    border-color: rgba(255, 255, 255, 0.06);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.speech-textarea {
+    width: 100%;
+}
+
+#speech-output {
+    width: 100%;
+    min-height: 220px;
+    background: #1A1A1C;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 17px;
+    color: #FFFFFF;
+    outline: none;
+    resize: none;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+#speech-output::placeholder {
+    color: #BBBBBB;
+}
+
+#speech-output:focus {
+    border-color: #00F5A0;
+}
+
+.notes-container {
+    margin-top: 40px;
+}
+
+.note {
+    background: #1F1F22;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 30px;
+    padding: 14px 22px;
+    margin: 10px;
+    display: inline-block;
+    color: #FFFFFF;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.note.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.note:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #BBBBBB;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .speech-textarea {
+        max-width: 100%;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+
+    .note {
+        min-width: 150px;
+        max-width: 100%;
+    }
+}

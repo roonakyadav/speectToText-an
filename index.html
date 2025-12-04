@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeechFX - Premium Speech-to-Text Pad</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <header class="header">
+        <h1>SpeechFX</h1>
+        <div class="listening-indicator" id="listening-indicator"></div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            <div class="mic-container">
+                <div class="mic-icon" id="mic-icon">
+                    <img src="./assets/mic.png" alt="Microphone">
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="start-btn" class="btn">Start Listening</button>
+                <button id="stop-btn" class="btn" disabled>Stop Listening</button>
+            </div>
+
+            <div class="speech-textarea">
+                <textarea id="speech-output" placeholder="Your speech will appear here..." readonly></textarea>
+            </div>
+
+            <div class="save-controls">
+                <button id="save-btn" class="btn">Save Note</button>
+            </div>
+        </section>
+
+        <section class="notes-container" id="notes-container"></section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
