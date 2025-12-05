@@ -10,7 +10,7 @@ const recognition = new SpeechRecognition();
 recognition.continuous = true;
 recognition.interimResults = true;
 
-// Get elements
+// Get DOM elements
 const startBtn = document.getElementById('start-btn');
 const stopBtn = document.getElementById('stop-btn');
 const speechOutput = document.getElementById('speech-output');
@@ -19,9 +19,10 @@ const micIcon = document.getElementById('mic-icon');
 const listeningIndicator = document.getElementById('listening-indicator');
 const notesContainer = document.getElementById('notes-container');
 
-let isListening = false;
-let currentSpeech = '';
-let lastResultIndex = 0;
+// State variables
+let isListening = false; // Tracks if speech recognition is active
+let currentSpeech = '';  // Stores the current recognized speech
+let finalText = '';      // Accumulates finalized speech transcripts
 
 // Simple beep sounds
 function playBeep(frequency, duration, type) {
@@ -48,8 +49,9 @@ function playBeep(frequency, duration, type) {
 }
 
 // Event listeners
-startBtn.addEventListener("click", () => {
-    currentSpeech = ''; // Reset speech
+startBtn.addEventListener('click', () => {
+    currentSpeech = ''; // Reset current speech
+    finalText = '';     // Reset accumulated final text
     speechOutput.value = '';
     recognition.start();
 });
@@ -71,19 +73,27 @@ recognition.onstart = function () {
 };
 
 recognition.onresult = function (event) {
-    let finalTranscript = '';
-    let interimTranscript = '';
+    let newFinalText = '';     // New finalized speech since last result
+    let interimTranscript = ''; // Current interim speech
 
-    // Build final transcript
-    for (let i = 0; i < event.results.length; i++) {
-        finalTranscript += event.results[i][0].transcript;
-        if (!event.results[i].isFinal) {
-            interimTranscript += event.results[i][0].transcript;
+    // Process each result: finalize confirmed text and collect interim
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+            newFinalText += transcript;
+        } else {
+            interimTranscript += transcript;
         }
     }
 
-    currentSpeech = finalTranscript;
-    speechOutput.value = interimTranscript !== '' ? interimTranscript : finalTranscript;
+    // Accumulate the finalized text
+    finalText += newFinalText;
+
+    // Display the accumulated final text plus any current interim text
+    speechOutput.value = finalText + interimTranscript;
+
+    // Update current speech for saving
+    currentSpeech = finalText + interimTranscript;
 };
 
 recognition.onend = function () {
